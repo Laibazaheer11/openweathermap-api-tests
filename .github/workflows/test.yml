@@ -1,0 +1,16 @@
+name: Weather API Tests
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install Newman
+        run: npm install -g newman
+      - name: Run Tests
+        run: newman run OpenWeather.json --env-var "api_key=${{ secrets.API_KEY }}" --env-var "base_url=https://api.openweathermap.org" --env-var "city=Ankara"
